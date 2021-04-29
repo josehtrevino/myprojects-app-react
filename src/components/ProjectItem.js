@@ -1,7 +1,28 @@
+import { useContext } from 'react';
+
 import classes from './ProjectItem.module.css';
 import Card from './Card';
+import CompletedContext from '../store/completed-context';
 
-function ProjectItem({ image, title, technologies, description }) {
+function ProjectItem({ id, image, title, technologies, description }) {
+  const completedCtx = useContext(CompletedContext);
+
+  const itemIsCompleted = completedCtx.itemIsCompleted(id);
+
+  const toggleCompletedStatusHandler = () => {
+    if (itemIsCompleted) {
+      completedCtx.removeCompleted(id);
+    } else {
+      completedCtx.addCompleted({
+        id,
+        title,
+        description,
+        image,
+        technologies,
+      });
+    }
+  };
+
   return (
     <li className={classes.item}>
       <Card>
@@ -16,7 +37,11 @@ function ProjectItem({ image, title, technologies, description }) {
           </p>
         </div>
         <div className={classes.actions}>
-          <button>Add To Favorites</button>
+          <button onClick={toggleCompletedStatusHandler}>
+            {itemIsCompleted
+              ? 'Remove from Completed Projects'
+              : 'Add To Completed Projects'}
+          </button>
         </div>
       </Card>
     </li>

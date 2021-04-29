@@ -2,7 +2,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import AllProjectsPage from './pages/AllProjects';
 import NewProjectPage from './pages/NewProject';
-import Favorites from './pages/Favorites';
+import CompletedPage from './pages/Completed';
 import Layout from './components/Layout';
 
 function App() {
@@ -15,8 +15,8 @@ function App() {
         <Route path="/new-project">
           <NewProjectPage />
         </Route>
-        <Route path="/favorites">
-          <Favorites />
+        <Route path="/completed">
+          <CompletedPage />
         </Route>
       </Switch>
     </Layout>

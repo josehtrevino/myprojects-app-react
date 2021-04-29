@@ -1,6 +1,8 @@
+import { useState, useEffect } from 'react';
+
 import ProjectList from '../components/ProjectList';
 
-const data = [
+/* const data = [
   {
     id: 'p1',
     title: 'first project',
@@ -19,13 +21,49 @@ const data = [
     description:
       'Full Stack Project, using React in the Frontend and NodeJs + Express in the backend',
   },
-];
+]; */
 
 function AllProjectsPage() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadedProjects, setLoadedProjects] = useState([]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetch(
+      'https://myprojects-app-react-default-rtdb.firebaseio.com/projects.json'
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        const projects = [];
+
+        for (const key in data) {
+          const project = {
+            id: key,
+            ...data[key],
+          };
+
+          projects.push(project);
+        }
+
+        setIsLoading(false);
+        setLoadedProjects(projects);
+      });
+  }, []);
+
+  if (isLoading) {
+    return (
+      <section>
+        <p>Loading...</p>
+      </section>
+    );
+  }
+
   return (
     <section>
       <h1>All Projects</h1>
-      <ProjectList projects={data} />
+      <ProjectList projects={loadedProjects} />
     </section>
   );
 }
