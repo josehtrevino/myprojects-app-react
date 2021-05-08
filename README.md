@@ -1,4 +1,8 @@
-# Getting Started with Create React App
+# MyProjects App
+
+![Screenshot](./public/screenshot.png)
+
+App that allows to manage personal projects by using React and Firebase.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
